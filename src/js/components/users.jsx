@@ -6,8 +6,7 @@ import {
   Edit,
   EditButton,
   EmailField,
-  FileField,
-  FileInput,
+  ImageInput,
   ImageField,
   List,
   SimpleForm,
@@ -68,9 +67,9 @@ function UserCreate(props) {
   return (
     <Create {...props}>
       <SimpleForm redirect="list">
-        <FileInput source="files" label="Avatar" accept="image/*">
-          <FileField source="avatar" title="title" />
-        </FileInput>
+        <ImageInput source="avatar" label="Avatar" accept="image/*">
+          <ImageField source="src" title="title" />
+        </ImageInput>
         <TextInput source="first_name" />
         <TextInput source="last_name" />
         <TextInput source="email" />

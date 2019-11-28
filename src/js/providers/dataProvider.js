@@ -3,7 +3,7 @@ import firebase from '../utils/firebase';
 
 const apiUrl = 'https://reqres.in/api';
 const httpClient = fetchUtils.fetchJson;
-let data = [];
+let users = [];
 let previousData = null;
 
 async function getUsers(page = 1, perPage = 5, resource = 'users') {
@@ -20,14 +20,14 @@ async function getUsers(page = 1, perPage = 5, resource = 'users') {
 async function getEntireUserList(pageNo, perPage) {
   const results = await getUsers(pageNo, perPage);
   results.data.forEach((element) => {
-    data.push(element);
+    users.push(element);
   });
 
   if (pageNo < results.totalPages) {
     return getEntireUserList(pageNo + 1);
   }
 
-  return data;
+  return users;
 }
 
 function getList(resource, params) {
@@ -36,8 +36,8 @@ function getList(resource, params) {
     const start = (page - 1) * perPage;
     const end = page * perPage;
 
-    if (data.length > 0) {
-      resolve({ data: data.slice(start, end), total: data.length });
+    if (users.length > 0) {
+      resolve({ data: users.slice(start, end), total: users.length });
     } else {
       (async () => {
         const entireList = await getEntireUserList(page, perPage);
@@ -49,7 +49,7 @@ function getList(resource, params) {
 
 function create(resource, params) {
   return new Promise((resolve) => {
-    const { rawFile } = params.data.files;
+    const { rawFile } = params.data.avatar;
     const refStorage = firebase.storage().ref();
     const fileName = `${new Date()}-${rawFile.title}`;
     const metadata = { contentType: rawFile.type };
@@ -60,8 +60,8 @@ function create(resource, params) {
       .then((snapshot) => snapshot.ref.getDownloadURL())
       .then((url) => {
         paramsToSave.data.avatar = url;
-        paramsToSave.data.id = [...data].pop().id + 1;
-        data.push(paramsToSave.data);
+        paramsToSave.data.id = [...users].pop().id + 1;
+        users.push(paramsToSave.data);
         resolve({ data: paramsToSave.data });
       });
   });
@@ -69,15 +69,15 @@ function create(resource, params) {
 
 function getOne(resource, params) {
   return new Promise((resolve) => {
-    const user = data.find((userSelected) => userSelected.id === parseInt(params.id, 10));
+    const user = users.find((userSelected) => userSelected.id === parseInt(params.id, 10));
     resolve({ data: user });
   });
 }
 
 function update(resource, params) {
   return new Promise((resolve) => {
-    const newState = data.map((obj) => (obj.id === parseInt(params.id, 10) ? { ...obj, ...params.data } : obj));
-    data.data = newState;
+    const newState = users.map((obj) => (obj.id === parseInt(params.id, 10) ? { ...obj, ...params.data } : obj));
+    users = newState;
     resolve({ data: params.data });
   });
 }
@@ -85,7 +85,7 @@ function update(resource, params) {
 function deleteElement(resource, params) {
   return new Promise((resolve) => {
     ({ previousData } = params);
-    data = data.filter((item) => item.id !== parseInt(params.id, 10));
+    users = users.filter((item) => item.id !== parseInt(params.id, 10));
     resolve({ data: previousData });
   });
 }
