@@ -82,7 +82,7 @@ function update(resource, params) {
   });
 }
 
-function deleteElement(resource, params) {
+function deleteUser(resource, params) {
   return new Promise((resolve) => {
     ({ previousData } = params);
     users = users.filter((item) => item.id !== parseInt(params.id, 10));
@@ -95,5 +95,5 @@ export default {
   create,
   getOne,
   update,
-  delete: deleteElement,
+  delete: deleteUser,
 };
