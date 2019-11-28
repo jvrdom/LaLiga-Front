@@ -1,0 +1,17 @@
+.social-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+
+    &__title {
+        color: $dark-grey;
+        display: block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 39px;
+        line-height: 1.2;
+        padding-bottom: 53px;
+        text-align: center;
+        width: 100%;
+    }
+}

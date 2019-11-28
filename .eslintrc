@@ -1,0 +1,14 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
+  "rules": {
+    "max-len": ["error", {"code": 130}],
+    "react/jsx-props-no-spreading": 0
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  }
+}
