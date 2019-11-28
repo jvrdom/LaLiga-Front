@@ -6,7 +6,7 @@ const httpClient = fetchUtils.fetchJson;
 let data = [];
 let previousData = null;
 
-const getUsers = async (page = 1, perPage = 5, resource = 'users') => {
+async function getUsers(page = 1, perPage = 5, resource = 'users') {
   const url = `${apiUrl}/${resource}?page=${page}&per_page=${perPage}`;
   const apiResults = await httpClient(url).then(({ json }) => ({
     data: json.data,
@@ -15,9 +15,9 @@ const getUsers = async (page = 1, perPage = 5, resource = 'users') => {
   })).then((resp) => resp);
 
   return apiResults;
-};
+}
 
-const getEntireUserList = async (pageNo, perPage) => {
+async function getEntireUserList(pageNo, perPage) {
   const results = await getUsers(pageNo, perPage);
   results.data.forEach((element) => {
     data.push(element);
@@ -28,10 +28,10 @@ const getEntireUserList = async (pageNo, perPage) => {
   }
 
   return data;
-};
+}
 
-export default {
-  getList: (resource, params) => new Promise((resolve) => {
+function getList(resource, params) {
+  return new Promise((resolve) => {
     const { page, perPage } = params.pagination;
     const start = (page - 1) * perPage;
     const end = page * perPage;
@@ -44,9 +44,11 @@ export default {
         resolve({ data: entireList.slice(0, perPage), total: entireList.length });
       })();
     }
-  }),
+  });
+}
 
-  create: (resource, params) => new Promise((resolve) => {
+function create(resource, params) {
+  return new Promise((resolve) => {
     const { rawFile } = params.data.files;
     const refStorage = firebase.storage().ref();
     const fileName = `${new Date()}-${rawFile.title}`;
@@ -62,22 +64,36 @@ export default {
         data.push(paramsToSave.data);
         resolve({ data: paramsToSave.data });
       });
-  }),
+  });
+}
 
-  getOne: (resource, params) => new Promise((resolve) => {
+function getOne(resource, params) {
+  return new Promise((resolve) => {
     const user = data.find((userSelected) => userSelected.id === parseInt(params.id, 10));
     resolve({ data: user });
-  }),
+  });
+}
 
-  update: (resource, params) => new Promise((resolve) => {
+function update(resource, params) {
+  return new Promise((resolve) => {
     const newState = data.map((obj) => (obj.id === parseInt(params.id, 10) ? { ...obj, ...params.data } : obj));
     data.data = newState;
     resolve({ data: params.data });
-  }),
+  });
+}
 
-  delete: (resource, params) => new Promise((resolve) => {
+function deleteElement(resource, params) {
+  return new Promise((resolve) => {
     ({ previousData } = params);
     data = data.filter((item) => item.id !== parseInt(params.id, 10));
     resolve({ data: previousData });
-  }),
+  });
+}
+
+export default {
+  getList,
+  create,
+  getOne,
+  update,
+  delete: deleteElement,
 };

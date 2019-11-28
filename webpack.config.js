@@ -7,6 +7,9 @@ module.exports = {
     historyApiFallback: true,
   },
   entry: './src/js/index.jsx',
+  output: {
+    path: `${__dirname}/docs`,
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -47,7 +50,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: 'src/html/index.html',
-      filename: 'index.html',
+      filename: `${__dirname}/docs/index.html`,
     }),
   ],
 };

@@ -15,7 +15,7 @@
     padding: 15px;
     position: relative;
     transition: all 0.4s;
-    width: calc((100% - 20px) / 2);
+    width: calc((100% - 5px) / 2);
     z-index: 1;
 
     svg {
@@ -39,8 +39,8 @@
         color: $dark-grey;
     }
 
-    @media (max-width: 576px) {
-        width: 100%;
+    @media (min-width: 768px) {
+        width: calc((100% - 20px) / 2);
     }
 }
 

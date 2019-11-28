@@ -15,11 +15,12 @@
 .wrapper {
     background: $white;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    padding: 62px 110px 33px;
+    padding: 62px 20px 33px;
     position: relative;
     width: 80%;
 
     @media (min-width: 768px) {
+        padding: 62px 110px 33px;
         width: 380px;
         padding-left: 60px;
         padding-right: 60px;

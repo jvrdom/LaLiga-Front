@@ -17,15 +17,17 @@ import {
 } from 'react-admin';
 import { useMediaQuery } from '@material-ui/core';
 
-const UserTitle = ({ record }) => (
-  <span>
-    User
-    {' '}
-    { record ? `"${record.first_name}"` : ''}
-  </span>
-);
+function UserTitle({ record }) {
+  return (
+    <span>
+      User
+      {' '}
+      { record ? `"${record.first_name}"` : ''}
+    </span>
+  );
+}
 
-export const UserList = (props) => {
+function UserList(props) {
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   return (
     <List {...props} perPage={5} exporter={false} bulkActionButtons={false}>
@@ -47,31 +49,41 @@ export const UserList = (props) => {
       )}
     </List>
   );
+}
+
+function UserEdit(props) {
+  return (
+    <Edit title={<UserTitle />} {...props}>
+      <SimpleForm>
+        <TextField source="id" />
+        <TextInput source="first_name" />
+        <TextInput source="last_name" />
+        <TextInput source="email" />
+      </SimpleForm>
+    </Edit>
+  );
+}
+
+function UserCreate(props) {
+  return (
+    <Create {...props}>
+      <SimpleForm redirect="list">
+        <FileInput source="files" label="Avatar" accept="image/*">
+          <FileField source="avatar" title="title" />
+        </FileInput>
+        <TextInput source="first_name" />
+        <TextInput source="last_name" />
+        <TextInput source="email" />
+      </SimpleForm>
+    </Create>
+  );
+}
+
+export {
+  UserList,
+  UserEdit,
+  UserCreate,
 };
-
-export const UserEdit = (props) => (
-  <Edit title={<UserTitle />} {...props}>
-    <SimpleForm>
-      <TextField source="id" />
-      <TextInput source="first_name" />
-      <TextInput source="last_name" />
-      <TextInput source="email" />
-    </SimpleForm>
-  </Edit>
-);
-
-export const UserCreate = (props) => (
-  <Create {...props}>
-    <SimpleForm>
-      <FileInput source="files" label="Avatar" accept="image/*">
-        <FileField source="avatar" title="title" />
-      </FileInput>
-      <TextInput source="first_name" />
-      <TextInput source="last_name" />
-      <TextInput source="email" />
-    </SimpleForm>
-  </Create>
-);
 
 UserTitle.propTypes = {
   // eslint-disable-next-line react/require-default-props

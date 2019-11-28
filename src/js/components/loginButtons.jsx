@@ -5,7 +5,7 @@ import FacebookIcon from '../../icons/facebook.svg';
 import GoogleIcon from '../../icons/google.svg';
 import TwitterIcon from '../../icons/twitter.svg';
 
-export default function SocialButtons(props) {
+export default function LoginButtons(props) {
   const { onClickBtn } = props;
 
   const buttons = [
@@ -50,6 +50,6 @@ export default function SocialButtons(props) {
   );
 }
 
-SocialButtons.propTypes = {
+LoginButtons.propTypes = {
   onClickBtn: PropTypes.func.isRequired,
 };

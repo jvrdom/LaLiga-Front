@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLogin, useNotify } from 'react-admin';
-import SocialButtons from './socialButtons';
+import LoginButtons from './loginButtons';
 
 export default function Login() {
   const login = useLogin();
@@ -15,7 +15,7 @@ export default function Login() {
     <div className="limiter">
       <div className="container">
         <div className="wrapper">
-          <SocialButtons onClickBtn={onLoginSocial} />
+          <LoginButtons onClickBtn={onLoginSocial} />
         </div>
       </div>
     </div>
