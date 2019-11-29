@@ -30,20 +30,17 @@ async function getEntireUserList(pageNo, perPage) {
   return users;
 }
 
-function getList(resource, params) {
-  return new Promise((resolve) => {
-    const { page, perPage } = params.pagination;
-    const start = (page - 1) * perPage;
-    const end = page * perPage;
+async function getList(resource, params) {
+  const { page, perPage } = params.pagination;
+  const start = (page - 1) * perPage;
+  const end = page * perPage;
 
-    if (users.length > 0) {
-      resolve({ data: users.slice(start, end), total: users.length });
-    } else {
-      (async () => {
-        const entireList = await getEntireUserList(page, perPage);
-        resolve({ data: entireList.slice(0, perPage), total: entireList.length });
-      })();
-    }
+  if (users.length === 0) {
+    await getEntireUserList(page, perPage);
+  }
+
+  return new Promise((resolve) => {
+    resolve({ data: users.slice(start, end), total: users.length });
   });
 }
 
