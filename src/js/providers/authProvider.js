@@ -22,6 +22,12 @@ function login({ idProvider }) {
   return firebase.auth().signInWithPopup(provider).then((result) => {
     const token = result.credential.accessToken;
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify({
+      name: result.user.displayName,
+      email: result.user.email,
+      avatar: result.user.photoURL,
+      provider: result.additionalUserInfo.providerId,
+    }));
     return Promise.resolve();
   }).catch((error) => Promise.reject(error));
 }

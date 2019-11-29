@@ -13,6 +13,8 @@ import {
   SimpleList,
   TextField,
   TextInput,
+  email,
+  required,
 } from 'react-admin';
 import { useMediaQuery } from '@material-ui/core';
 
@@ -51,28 +53,34 @@ function UserList(props) {
 }
 
 function UserEdit(props) {
+  const validateEmail = [required(), email()];
+  const validateFirstName = [required()];
+
   return (
     <Edit title={<UserTitle />} {...props}>
       <SimpleForm>
         <TextField source="id" />
-        <TextInput source="first_name" />
-        <TextInput source="last_name" />
-        <TextInput source="email" />
+        <TextInput source="first_name" validate={validateFirstName} />
+        <TextInput source="last_name" validate={validateFirstName} />
+        <TextInput source="email" validate={validateEmail} />
       </SimpleForm>
     </Edit>
   );
 }
 
 function UserCreate(props) {
+  const validateEmail = [required(), email()];
+  const validateFirstName = [required()];
+
   return (
     <Create {...props}>
       <SimpleForm redirect="list">
         <ImageInput source="avatar" label="Avatar" accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
-        <TextInput source="first_name" />
-        <TextInput source="last_name" />
-        <TextInput source="email" />
+        <TextInput source="first_name" validate={validateFirstName} />
+        <TextInput source="last_name" validate={validateFirstName} />
+        <TextInput source="email" validate={validateEmail} />
       </SimpleForm>
     </Create>
   );

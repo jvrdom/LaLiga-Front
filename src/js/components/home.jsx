@@ -5,6 +5,7 @@ import { UserCreate, UserEdit, UserList } from './users';
 import authProvider from '../providers/authProvider';
 import dataProvider from '../providers/dataProvider';
 import MyLoginPage from './login';
+import Dashboard from './dashboard';
 
 import '../../css/style.scss';
 
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <Admin
       title="My Custom Admin"
+      dashboard={Dashboard}
       dataProvider={dataProvider}
       authProvider={authProvider}
       loginPage={MyLoginPage}
