@@ -22,12 +22,23 @@ function login({ idProvider }) {
   return firebase.auth().signInWithPopup(provider).then((result) => {
     const token = result.credential.accessToken;
     localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify({
+
+    const userData = {
       name: result.user.displayName,
       email: result.user.email || result.additionalUserInfo.profile.email,
-      avatar: result.user.photoURL,
       provider: result.additionalUserInfo.providerId,
-    }));
+    }
+
+    if (idProvider === 'facebook') {
+      userData.avatar = `${result.user.photoURL}?width=151&height=150`;
+    } else if (idProvider === 'twitter') {
+      userData.avatar = result.user.photoURL.replace('_normal', '');
+    } else {
+      userData.avatar = result.user.photoURL;
+    }
+
+    localStorage.setItem('user', JSON.stringify(userData));
+
     return Promise.resolve();
   }).catch((error) => Promise.reject(error));
 }
