@@ -24,7 +24,7 @@ function login({ idProvider }) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify({
       name: result.user.displayName,
-      email: result.user.email,
+      email: result.user.email || result.additionalUserInfo.profile.email,
       avatar: result.user.photoURL,
       provider: result.additionalUserInfo.providerId,
     }));
