@@ -47,7 +47,13 @@ En el apartado de datos, se ha creado un `dataprovider` nuevo y no usar los prov
 
 Por ejemplo, a la hora de realizar un `POST` para la creación de un usuario la API retorna el usuario creado pero no mantiene el usuario previamente creado, esto ocasiona un problema ya que `react-admin` para aplicar cualquier acción sobre el usuario realiza una petición a la API en busca del mismo.
 
-Por lo cual se ha optado por realizar la llamada a la API para obtener el listado la primera vez y guardarlo en la memoria del browser para su posterior uso en la operaciones de creación, borrado y actualización.
+Este tipo de llamadas no se realizan a la API ya que el servicio no mantiene el estado de los recursos:
+
+- Crear un usuario: POST /api/users (campos del body: name, job)
+- Editar usuario: PATCH /api/users/{id}
+- Borrar usuario. DELETE /api/users/{id}
+
+Se ha optado por realizar la llamada a la API para obtener el listado la primera vez y guardarlo en la memoria del browser para su posterior uso en la operaciones de creación, borrado y actualización.
 
 ## Observaciones
 
