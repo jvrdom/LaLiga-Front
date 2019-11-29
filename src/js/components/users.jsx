@@ -54,14 +54,14 @@ function UserList(props) {
 
 function UserEdit(props) {
   const validateEmail = [required(), email()];
-  const validateFirstName = [required()];
+  const validateRequired = [required()];
 
   return (
     <Edit title={<UserTitle />} {...props}>
       <SimpleForm>
         <TextField source="id" />
-        <TextInput source="first_name" validate={validateFirstName} />
-        <TextInput source="last_name" validate={validateFirstName} />
+        <TextInput source="first_name" validate={validateRequired} />
+        <TextInput source="last_name" validate={validateRequired} />
         <TextInput source="email" validate={validateEmail} />
       </SimpleForm>
     </Edit>
@@ -70,16 +70,16 @@ function UserEdit(props) {
 
 function UserCreate(props) {
   const validateEmail = [required(), email()];
-  const validateFirstName = [required()];
+  const validateRequired = [required()];
 
   return (
     <Create {...props}>
       <SimpleForm redirect="list">
-        <ImageInput source="avatar" label="Avatar" accept="image/*">
+        <ImageInput source="avatar" label="Avatar" accept="image/*" validate={validateRequired}>
           <ImageField source="src" title="title" />
         </ImageInput>
-        <TextInput source="first_name" validate={validateFirstName} />
-        <TextInput source="last_name" validate={validateFirstName} />
+        <TextInput source="first_name" validate={validateRequired} />
+        <TextInput source="last_name" validate={validateRequired} />
         <TextInput source="email" validate={validateEmail} />
       </SimpleForm>
     </Create>
